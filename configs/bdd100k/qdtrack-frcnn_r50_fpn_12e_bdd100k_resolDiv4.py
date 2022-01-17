@@ -39,7 +39,7 @@ img_norm_cfg = dict(
 train_pipeline = [
     dict(type='LoadMultiImagesFromFile'),
     dict(type='SeqLoadAnnotations', with_bbox=True, with_ins_id=True),
-    dict(type='SeqResize', img_scale=(1296, 720), keep_ratio=True),
+    dict(type='SeqResize', img_scale=(1296//2, 720//2), keep_ratio=True),
     dict(type='SeqRandomFlip', share_params=True, flip_ratio=0.5),
     dict(type='SeqNormalize', **img_norm_cfg),
     dict(type='SeqPad', size_divisor=32),
@@ -53,7 +53,7 @@ test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        img_scale=(1296, 720),
+        img_scale=(1296//2, 720//2),
         flip=False,
         transforms=[
             dict(type='Resize', keep_ratio=True),
@@ -117,7 +117,8 @@ log_config = dict(
 total_epochs = 12
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
-load_from = None
+# load_from = None
+load_from = "/ssd1/chenwy/dataset/bdd100k/qdtrack-frcnn_r50_fpn_12e_bdd100k-13328aed.pth"
 resume_from = None
 workflow = [('train', 1)]
 evaluation = dict(metric=['bbox', 'track'], interval=2)

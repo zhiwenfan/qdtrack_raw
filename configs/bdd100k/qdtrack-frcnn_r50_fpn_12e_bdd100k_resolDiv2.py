@@ -39,7 +39,7 @@ img_norm_cfg = dict(
 train_pipeline = [
     dict(type='LoadMultiImagesFromFile'),
     dict(type='SeqLoadAnnotations', with_bbox=True, with_ins_id=True),
-    dict(type='SeqResize', img_scale=(1296, 720), keep_ratio=True),
+    dict(type='SeqResize', img_scale=(1296//1.4, 720//1.4), keep_ratio=True),
     dict(type='SeqRandomFlip', share_params=True, flip_ratio=0.5),
     dict(type='SeqNormalize', **img_norm_cfg),
     dict(type='SeqPad', size_divisor=32),
@@ -53,7 +53,7 @@ test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        img_scale=(1296, 720),
+        img_scale=(1296//1.4, 720//1.4),
         flip=False,
         transforms=[
             dict(type='Resize', keep_ratio=True),
